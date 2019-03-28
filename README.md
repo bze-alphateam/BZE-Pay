@@ -1,8 +1,8 @@
-BTCz-Pay (v0.2.0)
+BZE-Pay (v0.1.0)
 ===================
 
-Self-hosted Node.js BitcoinZ payment gateway. Provides REST API (microservice).
-Process BitcoinZ payments on your end, securely, with no comission.
+Self-hosted Node.js BZEdge payment gateway. Provides REST API (microservice).
+Process BZEdge payments on your end, securely, with no comission.
 
 Request payments (invoicing), check payments (whether invoice is paid), receive callbacks if payment is made (client and server side).
 
@@ -12,7 +12,7 @@ Depends on Nodejs v8+, BitcoinZ Core, Couchdb for storage and coinmarket.com API
 Installation
 ------------
 
-* Install [bitcoinz-insight-patched](https://github.com/btcz/bitcoinz-insight-patched)
+* Install [bzedge-insight-patched](https://github.com/bze-alphateam/bzedge-patched-for-bitcore)
 
 Install nodejs 8.x
 ```
@@ -22,7 +22,7 @@ sudo apt-get install nodejs libzmq3-dev
 
 Clone & install project:
 ```
-git clone https://github.com/MarcelusCH/BTCz-Pay && cd BTCz-Pay
+git clone https://github.com/bze-alphateam/BZE-Pay && cd BZE-Pay
 npm install
 cp config.js.dev config.js
 ```
@@ -31,12 +31,12 @@ Install & configure Couchdb:
 ```
 sudo apt-get install couchdb
 curl -s -X PUT http://localhost:5984/_config/admins/User_Name -d '"Pass_Word"'
-curl -u User_Name -X PUT localhost:5984/btczpay
+curl -u User_Name -X PUT localhost:5984/bzepay
 ```
 
 Edit `config.js`:
 * Point it to a new Couchdb database
-* Point it to a BitcoinZ Core RPC server
+* Point it to a BZEdge Core RPC server
 * Update coinmarketcap API key
 * Add tmp wallet with founds for speed payment
 * Update gMail user and password
@@ -47,7 +47,7 @@ Running
 -------
 
 ```
-nodejs btcz-pay.js
+nodejs bze-pay.js
 nodejs worker.js
 nodejs worker2.js
 nodejs worker3.js
@@ -68,7 +68,7 @@ MIT
 Author
 ------
 
-Marcelus (BTCZ community)
+Marcelus (BZE community)
 
 
 TODO
@@ -82,7 +82,7 @@ API
 ### GET /api/request_payment/:expect/:currency/:message/:sellerAddress/:customerMail/:ipnPingback/:cliCallbackSuccess/:cliCallbackError/:SpeedSweep/:secret
 
 
-Create a request to pay, supported currencies: BTCZ, USD, EUR, CHF, GBP, RUB. Non-btcz currency is converted to btcz using current rate from coinmarketcap.com.
+Create a request to pay, supported currencies: BZE, USD, EUR, CHF, GBP, RUB. Non-BZE currency is converted to BZE using current rate from coinmarketcap.com.
 
 Returns a json document with QR code to be displayed to the payer, and a unique address for that particular payment (you can use it as invoice id).
 
@@ -99,19 +99,19 @@ The secret parameter is the secret phrase returned for the IPN pingback.
 
 **Example full router path:**
 ```
-http://localhost:2222/api/request_payment/0.005/BTCZ/wheres%20the%20money%20lebowski/t1VYSo8VtpKMm1SUwp1KJHbqrtfqj7tgpaE/test@test.com/https%253A%252F%252Fwww.google.com/https%253A%252F%252Fwww.google.com/https%253A%252F%252Fwww.google.com/0/01234abcd
+http://localhost:2222/api/request_payment/0.005/BZE/wheres%20the%20money%20lebowski/t1VYSo8VtpKMm1SUwp1KJHbqrtfqj7tgpaE/test@test.com/https%253A%252F%252Fwww.google.com/https%253A%252F%252Fwww.google.com/https%253A%252F%252Fwww.google.com/0/01234abcd
 ```
 (By using full router path, all parameters are mandatory)
 
 **Example with query string:**
 ```
-http://localhost:2222/api/request_payment/?expect=0.005&currency=BTCZ&message=wheres%20the%20money%20lebowski&seller=t1VYSo8VtpKMm1SUwp1KJHbqrtfqj7tgpaE&customerMail=test@test.com&ipnPingback=https%3A%2F%2Fwww.google.com&cliSuccessURL=https%3A%2F%2Fwww.google.com&cliErrorURL=https%3A%2F%2Fwww.google.com&SpeedSweep=0&secret=01234abcd
+http://localhost:2222/api/request_payment/?expect=0.005&currency=BZE&message=wheres%20the%20money%20lebowski&seller=t1VYSo8VtpKMm1SUwp1KJHbqrtfqj7tgpaE&customerMail=test@test.com&ipnPingback=https%3A%2F%2Fwww.google.com&cliSuccessURL=https%3A%2F%2Fwww.google.com&cliErrorURL=https%3A%2F%2Fwww.google.com&SpeedSweep=0&secret=01234abcd
 ```
 **Expanded:**
 ```
 http://localhost:2222/api/request_payment/?
      expect=0.005&
-     currency=BTCZ&
+     currency=BZE&
      message=wheres%20the%20money%20lebowski&
      seller=t1VYSo8VtpKMm1SUwp1KJHbqrtfqj7tgpaE&
      customerMail=test@test.com&
@@ -125,8 +125,8 @@ http://localhost:2222/api/request_payment/?
 
 **Parameters definition:**
 - `expect` = Mandatory - The expected amount to pay.
-- `currency` = Mandatory - The currency code (supported: BTCZ, BTC, USD, EUR, CHF, GBP, RUB).
-- `seller` = Mandatory - The seller BTCz address.
+- `currency` = Mandatory - The currency code (supported: BZE, BTC, USD, EUR, CHF, GBP, RUB).
+- `seller` = Mandatory - The seller BZE address.
 - `ipnPingback` = Mandatory - The IPN URL to get (from server side) once paid or expired.
 - `message` = Optional - An optional message.
 - `customerMail` = Optional - The customer eMail
@@ -161,10 +161,10 @@ http://localhost:2222/api/check_payment/f22c44cb-e26a-4022-864f-00f0d523d48a
 ```
 {
   "generated":"t1gwku8spbCFUodyJ26njknnDxeZGM8hVmm",
-  "btcz_expected":14.77818972,
+  "BZE_expected":14.77818972,
   "speed_sweep_fee":5,
-  "btcz_actual":0,
-  "btcz_unconfirmed":0,
+  "BZE_actual":0,
+  "BZE_unconfirmed":0,
   "currency":"USD",
   "amount":0.01,
   "timestamp_start":1537815608394,
@@ -211,9 +211,9 @@ https://yourDomaine.com/yourScript.php?secret=01234abcd&state=2
 eCommerce Plugin
 ===
 
-- Check in the [Plugin path](https://github.com/MarcelusCH/BTCz-Pay/tree/master/plugin)
+- Check in the [Plugin path](https://github.com/MarcelusCH/BZE-Pay/tree/master/plugin)
 
 UPDATES
 =======
 
-- See updates log for the [BTCz-Pay main server](https://github.com/MarcelusCH/BTCz-Pay/blob/master/UPDATES.md#BTCz-Pay-main-server)
+- See updates log for the [BZE-Pay main server](https://github.com/MarcelusCH/BZE-Pay/blob/master/UPDATES.md#BZE-Pay-main-server)
