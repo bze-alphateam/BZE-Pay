@@ -141,7 +141,7 @@ CurArray.forEach(function(value){
 
 
 // Startup server
-let server = app.listen(config.port, '127.0.0.1', function () {
+let server = app.listen(config.port, '0.0.0.0', function () {
   logger.log('BOOTING UP', ['Listening on port %d', config.port])
 })
 

@@ -17,7 +17,7 @@
 * ==============================================================================
 */
 
-let bitcore = require('bitcore-lib-btcz')
+let bitcore = require('bitcore-lib-bzedge')
 let bitcoinjs = require('bitcoinjs-lib')
 var validUrl = require('valid-url');
 

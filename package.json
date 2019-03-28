@@ -13,7 +13,8 @@
   },
   "dependencies": {
     "bitcoinjs-lib": "^3.3.0",
-    "bitcore-lib-btcz": "https://github.com/bitcoinz-wallets/bitcore-lib-btcz.git",
+    "bitcore-lib": "^8.1.1",
+    "bitcore-lib-bzedge": "https://github.com/bze-alphateam/bitcore-lib-bzedge",
     "body-parser": "^1.18.2",
     "chai": "^4.1.2",
     "ejs": "^2.6.1",
