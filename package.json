@@ -12,7 +12,7 @@
     "clean": "rm -r -f ./node_modules/ && rm -r -f ./qr/"
   },
   "dependencies": {
-    "bitcoinjs-lib": "^3.3.0",
+    "bitcoinjs-lib": "^4.0.3",
     "bitcore-lib": "^8.1.1",
     "bitcore-lib-bzedge": "https://github.com/bze-alphateam/bitcore-lib-bzedge",
     "body-parser": "^1.18.2",
